@@ -12,14 +12,17 @@ body{
     position: relative;
 }
 
-.movable{
+.game_object{
     position: absolute;
     width:5%;
-    height: auto;
+    height:auto;
     display: inline-block;
     background-color:transparent;
     margin:0px;
-    bottom:0px;
-    left:0px;
     transition: left 0.1s;
+}
+
+.game_object img{
+    width:100%;
+    height:auto;
 }
