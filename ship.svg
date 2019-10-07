@@ -1,0 +1,8 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='160px' height='120px' viewBox='10px 10px 160px 120px'>
+    <polygon fill='blue' points='0,120 40,80 40,120'/>
+    <polygon fill='blue' points='120,120 160,120 120,80'/>
+    <polygon fill='red' points='40,120 40,40 60,40 60,120'/>
+    <polygon fill='red' points='100,120 120,120 120,40 100,40'/>
+    <polygon fill='green' points='60,120 100,120 100,40 60,40'/>
+    <polygon fill='green' points='60,40 100,40 80,0'/>
+</svg>

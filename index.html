@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>SG</title>
+        <link rel='stylesheet' type='text/css' href='default.css'>
+    </head>
+    <body>
+        
+        <div class='background'>
+            <div class='movable' id='ship' style='left:45%;'>
+                <img src='ship.svg' style='width: 100%;height:auto'>
+            </div>
+        </div>
+    </body>
+
+    <script src='moves.js'></script>
+    <script type='text/javascript'>
+    
+        document.addEventListener('keydown',function(key){keys[key.keyCode] = true;});
+        document.addEventListener('keyup',function(key){keys[key.keyCode] = false;});
+    </script>
+
+
+</html>

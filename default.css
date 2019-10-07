@@ -1,0 +1,25 @@
+body{
+    width:100vw;
+    height: 100vh;
+    overflow:hidden;
+    margin:0px;
+}
+
+.background{
+    background-color: black;
+    width:100%;
+    height: 100%;
+    position: relative;
+}
+
+.movable{
+    position: absolute;
+    width:5%;
+    height: auto;
+    display: inline-block;
+    background-color:transparent;
+    margin:0px;
+    bottom:0px;
+    left:0px;
+    transition: left 0.1s;
+}
