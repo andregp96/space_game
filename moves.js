@@ -1,4 +1,5 @@
 var keys = {};
+var enemies = [];
 var ship;
 
 function moveShip(key){
@@ -15,72 +16,20 @@ function moveShip(key){
     }
 }
 
-class GameObject{
-
-    id;
-    screen_element;
-    state = "Alive";
-
-    constructor(id,img_src,initial_x,initial_y){
-        this.id = id;
-
-        this.screen_element = document.createElement("div");
-        this.screen_element.classList.add("game_object");
-
-        let img = document.createElement("img");
-        img.src = img_src;
-        this.screen_element.append(img);
-
-        this.setPropertyValue("left",initial_x,'px');
-        this.setPropertyValue('top',initial_y,'px');
-        
-        document.getElementById("background").append(this.screen_element);
-    }
-
-    moveRight(){
-        let left = this.getPropertyValue("left");
-        let width = this.getPropertyValue("right");
-        if(left < window.innerWidth - width){
-            this.setPropertyValue("left",left + 40,'px');
-        }
-    }
-
-    moveLeft(){
-        let left = this.getPropertyValue("left");
-        if(left > 35){
-            this.setPropertyValue("left",left - 40,'px');
-        }
-    }
-
-    getPropertyValue(property){
-        let style_list = getComputedStyle(this.screen_element);
-        return parseFloat(style_list[property]);
-    }
-
-    setPropertyValue(property,value,unity){
-        this.screen_element.style[property] = value + unity;
-    }
-
-    checkCollision(enemy){
-        if(
-            enemy.getPropertyValue("top") <= this.getPropertyValue("top") + this.getPropertyValue("height") &&
-            enemy.getPropertyValue("top") >= this.getPropertyValue("top") &&
-            enemy.getPropertyValue("left") <= this.getPropertyValue("left") + this.getPropertyValue("width") &&
-            enemy.getPropertyValue("left") >= this.getPropertyValue("left")
-        ){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-}
-
-function createEnemys(num){
+function createEnemys(rows){
     bg = document.getElementById("background");
-    for(let i=0;i<num;i++){
-        let enemy = new GameObject("enemy"+i,"ship.svg",i*80,10); 
-    }
+    let distance = 0;
+    let height = 20
+    for(let j = 0; j< rows; j++){
+        for(let i=0;i<10;i++){
+            var enemy = new GameObject("enemy"+i,"cat.svg",distance,height); 
+            enemy.setPropertyValue("position","relative","");
+            enemy.setPropertyValue("margin-left",2.5,"%");
+            enemy.setPropertyValue("margin-right",2.5,"%");
+            enemies.push(enemy);
+        } 
+        height += enemy.getPropertyValue("height") + 20;
+    }      
 }
 
 function createPlayer(){
@@ -101,7 +50,7 @@ function gameLoop(){
 
 function start_game(){
     ship = createPlayer();
-    createEnemys(10);
+    createEnemys(3);
     setInterval(() => {
       gameLoop();  
     }, 10);

@@ -19,7 +19,6 @@ body{
     display: inline-block;
     background-color:transparent;
     margin:0px;
-    transition: left 0.1s;
 }
 
 .game_object img{
