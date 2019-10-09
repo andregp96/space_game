@@ -70,20 +70,14 @@ class GameObject{
     }
 
     moveRight(){
-        let left = this.getPxValue("left");
-        let width =  this.getPxValue("width");
-        let distance = width * 0.1;
-        if(left + width + distance < window.innerWidth){
-            this.setPropertyValue("left",left + distance,'px');
+        if(this.x + 40 < window.innerWidth){
+            this.setX(x+40);
         }
     }
 
     moveLeft(){
-        let left = this.getPxValue("left");
-        let width =  this.getPxValue("width");
-        let distance = width * 0.1;
-        if(left > distance){
-            this.setPropertyValue("left",left - distance,'px');
+        if(this.x < window.innerWidth){
+            this.setX(x-40);
         }
     }
 

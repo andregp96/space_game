@@ -11,3 +11,8 @@ function redraw(){
     }
    
 }
+
+document.addEventListener('keydown',function(key){game.setKey(key.keyCode,true)});
+document.addEventListener('keyup',function(key){game.setKey(key.keyCode,false)});
+document.getElementById("corpo").addEventListener("resize",redraw());
+createGame();

@@ -5,6 +5,10 @@ class Game{
     Enemies = [];
     Keys = {};
 
+    setKey(code,value){
+        this.Keys[code] = value;
+    }
+
     addToScreen(obj){
         this.Screen.append(obj);
     }
@@ -13,7 +17,7 @@ class Game{
         this.Screen.remove(obj.getId);
     }
 
-    draw(){
+    drawGame(){
         this.addToScreen(this.Player.getScreenElement());
         for(let i=0;i<this.Enemies.length;i++){
             this.addToScreen(this.Enemies[i].getScreenElement());
@@ -24,11 +28,11 @@ class Game{
 
         switch(key){
             case "39":
-                ship.moveRight();
+                this.Player.moveRight();
             break;
         
             case "37":
-                ship.moveLeft();
+                this.Player.moveLeft();
             break;
         }
     }
@@ -46,12 +50,12 @@ class Game{
         this.Player.setX("45%");
         this.Player.setY("90%");
         this.createEnemies(rows);
-        this.draw();
+        this.drawGame();
         
         
-        // setInterval(() => {
-        //   gameLoop();  
-        // }, 10);
+        setInterval(() => {
+          this.gameLoop();  
+        }, 10);
     }
 
     stopGame(){
