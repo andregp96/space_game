@@ -5,21 +5,22 @@
         <meta charset="UTF-8">
         <title>SG</title>
         <link rel='stylesheet' type='text/css' href='default.css'>
-        <script src='GameObject.js'></script>
-        <script src='moves.js'></script>
+        <script src='classes/GameObject.js'></script>
+        <script src='classes/Game.js'></script>
+        <script src='starter.js'></script>
     </head>
-    <body>
-        
-        <div class='background' id='background'>
+    <body id='corpo'>    
+        <div class='background' id='screen'>
 
         </div>
     </body>
 
     
     <script type='text/javascript'>  
-        document.addEventListener('keydown',function(key){keys[key.keyCode] = true;});
-        document.addEventListener('keyup',function(key){keys[key.keyCode] = false;});
-        start_game();
+        // document.addEventListener('keydown',function(key){keys[key.keyCode] = true;});
+        // document.addEventListener('keyup',function(key){keys[key.keyCode] = false;});
+        document.getElementById("corpo").addEventListener("resize",redraw());
+        createGame();
     </script>
 
 

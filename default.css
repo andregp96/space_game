@@ -15,7 +15,7 @@ body{
 .game_object{
     position: absolute;
     width:5%;
-    height:auto;
+    height:5%;
     display: inline-block;
     background-color:transparent;
     margin:0px;
