@@ -3,7 +3,8 @@ class Game{
     Screen = document.getElementById("screen");
     Player;
     Enemies = [];
-    Projectiles = [];
+    PlayerProjectiles = [];
+    EnemyProjectiles = []
     Keys = {};
     MainLoop;
 
@@ -11,19 +12,20 @@ class Game{
         this.Keys[code] = value;
     }
 
-    createProjectile(obj){
+    createProjectile(obj,src){
         let proj = new GameObject("projectile");
+
         proj.setPctValue("0.25%","width");
         proj.setX(-1 + obj.getX() + obj.getPxValue("width")/2);
         proj.setY(obj.getY()- obj.getPxValue("height")); 
-        proj.setImg("projectile.svg");
-        proj.appendTo(this.Screen);
+        proj.setImg(src);
 
-        this.Projectiles.push(proj);
+        return proj;
     }
 
     createGameObject(id,src){
         let obj = new GameObject(id);
+
         obj.setImg(src);
 
         return obj;
@@ -43,50 +45,94 @@ class Game{
         this.initializeEnemies()
     }
 
-    processInput(key){
-        switch(key){
-            case "39":
-                this.Player.moveRight();
-            break;
+    processInput(){
+        for(let key in this.Keys){
+            if(this.Keys[key]){
+                switch(key){
+                    case "39":
+                        this.Player.moveRight();
+                    break;
+                
+                    case "37":
+                        this.Player.moveLeft();
+                    break;
         
-            case "37":
-                this.Player.moveLeft();
-            break;
-
-        }
+                }
+            }
+        }  
     }
 
-    gameLoop(){
-        for(let index in this.Keys){
-            if(this.Keys[index]){
-                this.processInput(index);
-            }
-        }
+    processCollision(){
 
-        for(let index in this.Projectiles){
-            let proj = this.Projectiles[index];
-            if(proj.getY() > window.innerHeight || proj.getY() < 0 ){
-                this.Projectiles.splice(index,1);
-                proj.destroy();
-            }
-            else{
-                
-                proj.setY( proj.getY()-5);
-            }
-        }
-
-        for(let i in this.Projectiles){
-            let proj = this.Projectiles[i];
+        for(let i in this.PlayerProjectiles){
+            let proj = this.PlayerProjectiles[i];
             for(let j in this.Enemies){
                 let en = this.Enemies[j];
                 if(en.checkCollision(proj) == true){
                     this.Enemies.splice(j,1);
                     en.destroy();
-                    this.Projectiles.splice(i,1);
+                    this.PlayerProjectiles.splice(i,1);
                     proj.destroy();
                 }
             }
         }
+
+        for(let i in this.EnemyProjectiles){
+            let proj = this.EnemyProjectiles[i];
+
+            if(this.Player.checkCollision(proj) == true){
+                this.EnemyProjectiles.splice(i,1);
+                proj.destroy();
+                this.Player.destroy();
+                this.stopGame();     
+            }
+        }
+        
+    }
+
+    processMovement(){
+
+        for(let index in this.PlayerProjectiles){
+            let proj = this.PlayerProjectiles[index];
+            if(proj.getY() > window.innerHeight || proj.getY() < 0 ){
+                this.PlayerProjectiles.splice(index,1);
+                proj.destroy();
+            }
+            else{      
+                proj.setY( proj.getY()-5);
+            }
+        }
+
+        for(let index in this.EnemyProjectiles){
+            let proj = this.EnemyProjectiles[index];
+            if(proj.getY() > window.innerHeight || proj.getY() < 0 ){
+                this.EnemyProjectiles.splice(index,1);
+                proj.destroy();
+            }
+            else{      
+                proj.setY( proj.getY()+5);
+            }
+        }
+
+        
+    }
+
+    processActions(){
+        for(let index in this.Enemies){
+            let en = this.Enemies[index];
+            if(Math.random() >= 0.99){
+                let proj = this.createProjectile(en,"enemy_projectile.svg");
+                proj.appendTo(this.Screen);
+                this.EnemyProjectiles.push(proj);
+            }        
+        }
+    }
+
+    gameLoop(){     
+        this.processCollision();
+        this.processInput();
+        this.processMovement();
+        this.processActions();
     }
 
     initializeEnemies(){
@@ -133,6 +179,8 @@ class Game{
     }
 
     shoot(){
-        this.createProjectile(this.Player);
+        let proj = this.createProjectile(this.Player,"player_projectile.svg");
+        proj.appendTo(this.Screen);
+        this.PlayerProjectiles.push(proj);
     }
 } 
