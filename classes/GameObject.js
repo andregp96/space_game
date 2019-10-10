@@ -46,8 +46,7 @@ class GameObject{
             if(this.x < 0){
                 this.setX(0);
             }
-        }
-        
+        }      
     }
 
     setY(value){
@@ -95,27 +94,28 @@ class GameObject{
     }
 
     moveRight(){
-
         this.setX(this.x+20);
-
     }
 
     moveLeft(){
         this.setX(this.x-20);
-
     }
 
     checkCollision(enemy){
         if(
-            enemy.getPxValue("top") <= this.getPxValue("top") + this.getPxValue("height") &&
-            enemy.getPxValue("top") >= this.getPxValue("top") &&
-            enemy.getPxValue("left") <= this.getPxValue("left") + this.getPxValue("width") &&
-            enemy.getPxValue("left") >= this.getPxValue("left")
+            (enemy.getY() >= this.y && enemy.getY() <= this.y + this.getPxValue("height")) &&
+            (enemy.getX() >= this.x && enemy.getX() <= this.x + this.getPxValue("width"))
         ){
             return true;
         }
         else{
             return false;
         }
+    }
+
+    destroy(){
+        this.screen_element.remove();
+        delete this.screen_element;
+        delete this;
     }
 }
