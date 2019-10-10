@@ -101,10 +101,10 @@ class GameObject{
         this.setX(this.x-20);
     }
 
-    checkCollision(enemy){
+    checkCollision(projectile){
         if(
-            (enemy.getY() >= this.y && enemy.getY() <= this.y + this.getPxValue("height")) &&
-            (enemy.getX() >= this.x && enemy.getX() <= this.x + this.getPxValue("width"))
+            (projectile.getY() >= this.y && projectile.getY() <= this.y + this.getPxValue("height")) &&
+            (projectile.getX() >= this.x && projectile.getX() <= this.x + this.getPxValue("width"))
         ){
             return true;
         }

@@ -36,7 +36,7 @@ class Game{
         }
     }
 
-    refreshGame(){
+    resizeGame(){
         this.Player.setX(this.Player.getX());
         this.Player.setY("90%");
         
@@ -63,16 +63,6 @@ class Game{
             }
         }
 
-        // for(let i in this.Enemies){
-        //     for(let index in this.Projectiles){
-        //     let en = this.Enemies[i];
-        //     if(proj.checkCollision(en)){
-        //         this.Enemies.splice(i,1);
-        //         en.destroy();
-        //     }
-            
-        // }
-
         for(let index in this.Projectiles){
             let proj = this.Projectiles[index];
             if(proj.getY() > window.innerHeight || proj.getY() < 0 ){
@@ -83,7 +73,19 @@ class Game{
                 
                 proj.setY( proj.getY()-5);
             }
+        }
 
+        for(let i in this.Projectiles){
+            let proj = this.Projectiles[i];
+            for(let j in this.Enemies){
+                let en = this.Enemies[j];
+                if(en.checkCollision(proj) == true){
+                    this.Enemies.splice(j,1);
+                    en.destroy();
+                    this.Projectiles.splice(i,1);
+                    proj.destroy();
+                }
+            }
         }
     }
 

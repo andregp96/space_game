@@ -7,7 +7,7 @@ function createGame(){
 
 function redraw(){
     if(game != undefined){
-        game.refreshGame();
+        game.resizeGame();
     }
    
 }
