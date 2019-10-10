@@ -2,6 +2,7 @@ class GameObject{
 
     screen_element = document.createElement("div");
     state = "Alive";
+    appended = false;
     img = document.createElement("img");
     x = 0;
     y = 0;
@@ -9,6 +10,18 @@ class GameObject{
     constructor(id){
         this.screen_element.classList.add("game_object");
         this.screen_element.id = id;
+    }
+
+    getState(){
+        return this.state;
+    }
+
+    appendTo(parent){
+        parent.append(this.screen_element);
+        this.appended = true;
+
+        this.setY(this.getPxValue("top"));
+        this.setX(this.getPxValue("left"));
     }
 
     setImg(src){
@@ -24,7 +37,17 @@ class GameObject{
         else{ 
             this.setPxValue(value,"left");
         }
-        this.x = this.getPxValue("left");   
+        if(this.appended == true){
+            this.x = this.getPxValue("left");   
+
+            if(this.x + this.getPxValue("width") > window.innerWidth){
+                this.setX(window.innerWidth - this.getPxValue("width"));
+            }
+            if(this.x < 0){
+                this.setX(0);
+            }
+        }
+        
     }
 
     setY(value){
@@ -35,7 +58,9 @@ class GameObject{
         else{
             this.setPxValue(value,"top");
         }
-        this.y = this.getPxValue("top");
+        if(this.appended == true){
+            this.y = this.getPxValue("top");
+        }
     }
 
     setPxValue(value,property){
@@ -62,7 +87,7 @@ class GameObject{
         let style_list = getComputedStyle(this.screen_element);
         let value = parseFloat(style_list[property]);
         if(value == NaN){
-            return false;
+            throw "Valor não numérico retornado para propriedade" + property;
         }
         else{
             return value;
@@ -70,18 +95,15 @@ class GameObject{
     }
 
     moveRight(){
-        if(this.x + 40 < window.innerWidth){
-            this.setX(x+40);
-        }
+
+        this.setX(this.x+20);
+
     }
 
     moveLeft(){
-        if(this.x < window.innerWidth){
-            this.setX(x-40);
-        }
-    }
+        this.setX(this.x-20);
 
-    
+    }
 
     checkCollision(enemy){
         if(

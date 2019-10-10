@@ -4,13 +4,10 @@ class Game{
     Player;
     Enemies = [];
     Keys = {};
+    MainLoop;
 
     setKey(code,value){
         this.Keys[code] = value;
-    }
-
-    addToScreen(obj){
-        this.Screen.append(obj);
     }
 
     removeFromScreen(obj){
@@ -18,14 +15,20 @@ class Game{
     }
 
     drawGame(){
-        this.addToScreen(this.Player.getScreenElement());
+        this.Player.appendTo(this.Screen);
         for(let i=0;i<this.Enemies.length;i++){
-            this.addToScreen(this.Enemies[i].getScreenElement());
+            this.Enemies[i].appendTo(this.Screen);
         }
     }
 
-    processInput(key){
+    refreshGame(){
+        this.Player.setX(this.Player.getX());
+        this.Player.setY("90%");
+        
+        this.startEnemies()
+    }
 
+    processInput(key){
         switch(key){
             case "39":
                 this.Player.moveRight();
@@ -45,45 +48,54 @@ class Game{
         }
     }
 
-    startGame(rows){
-        this.createPlayer();
-        this.Player.setX("45%");
-        this.Player.setY("90%");
-        this.createEnemies(rows);
-        this.drawGame();
+    startGame(enemies){
+
+        this.Player = this.createGameObject("player","ship.svg");
+        this.startPlayer();
+
+        for(let i=0;i<enemies;i++){
+            let enemy = this.createGameObject("enemy_"+i,"cat.svg");
+            this.Enemies.push(enemy);  
+        }
+        this.startEnemies();
         
+        this.drawGame();   
         
-        setInterval(() => {
-          this.gameLoop();  
-        }, 10);
+        this.MainLoop = setInterval(() => {this.gameLoop();}, 10);
     }
 
     stopGame(){
-
+        clearInterval(this.MainLoop);
     }
 
-    createPlayer(){
-        this.Player = new GameObject("player");
-        this.Player.setImg("ship.svg");
+    createGameObject(id,src){
+        let obj = new GameObject(id);
+        obj.setImg(src);
+
+        return obj;
     }
 
-    createEnemies(rows){
-        let x = 2.5;
+    startEnemies(){
         let y = 5;
-        let enemy;
+        let x = 2.5;
+        for(let i = 0;i < this.Enemies.length;i++){
+            if(this.Enemies[i].getState() == "Alive"){
+                this.Enemies[i].setX(x + "%");
+                this.Enemies[i].setY(y + "%");
+                if(x > 90){
+                    x = 2.5;
+                    y += 15;
+                }
+                else{
+                    x += 10;  
+                }
+            }      
+        }  
+    }
 
-        for(let i = 0; i< rows; i++){
-            x = 2.5;
-            for(let j=0;j<10;j++){
-                enemy = new GameObject("enemy"+j);
-                enemy.setImg("cat.svg");
-                enemy.setX(x + "%");
-                enemy.setY(y+ "%"); 
-                this.Enemies.push(enemy);  
-                x += 10;
-            } 
-            y += 15;      
-        }    
+    startPlayer(){
+        this.Player.setX("45%");
+        this.Player.setY("90%");
     }
 
 } 
