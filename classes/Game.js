@@ -13,9 +13,7 @@ class Game{
     }
 
     createProjectile(obj,src){
-        let proj = new GameObject("projectile");
-
-        proj.setPctValue("0.25%","width");
+        let proj = new Projectile("projectile");
         proj.setX(-1 + obj.getX() + obj.getPxValue("width")/2);
         proj.setY(obj.getY()- obj.getPxValue("height")); 
         proj.setImg(src);
@@ -38,11 +36,29 @@ class Game{
         }
     }
 
+    positionEnemies(){
+        let x = 4;
+        let y = 2;
+        
+        for(let i = 0;i < this.Enemies.length;i++){
+
+            this.Enemies[i].setX(x + "%");
+            this.Enemies[i].setY(y + "%");
+            if(x > 90){
+                x = 4;
+                y += 8;
+            }
+            else{
+                x += 4;  
+            }     
+        }  
+    }
+
     resizeGame(){
         this.Player.setX(this.Player.getX());
         this.Player.setY("90%");
         
-        this.initializeEnemies()
+        this.positionEnemies();
     }
 
     processInput(){
@@ -65,7 +81,9 @@ class Game{
     processCollision(){
 
         for(let i in this.PlayerProjectiles){
+
             let proj = this.PlayerProjectiles[i];
+
             for(let j in this.Enemies){
                 let en = this.Enemies[j];
                 if(en.checkCollision(proj) == true){
@@ -78,6 +96,7 @@ class Game{
         }
 
         for(let i in this.EnemyProjectiles){
+
             let proj = this.EnemyProjectiles[i];
 
             if(this.Player.checkCollision(proj) == true){
@@ -93,24 +112,27 @@ class Game{
     processMovement(){
 
         for(let index in this.PlayerProjectiles){
+
             let proj = this.PlayerProjectiles[index];
-            if(proj.getY() > window.innerHeight || proj.getY() < 0 ){
+            if(proj.getState() == "Dead"){
                 this.PlayerProjectiles.splice(index,1);
                 proj.destroy();
             }
-            else{      
-                proj.setY( proj.getY()-5);
+            else{
+                proj.moveUp();
             }
+            
         }
 
         for(let index in this.EnemyProjectiles){
-            let proj = this.EnemyProjectiles[index];
-            if(proj.getY() > window.innerHeight || proj.getY() < 0 ){
+
+            let proj = this.EnemyProjectiles[index]; 
+            if(proj.getState() == "Dead"){
                 this.EnemyProjectiles.splice(index,1);
                 proj.destroy();
             }
-            else{      
-                proj.setY( proj.getY()+5);
+            else{
+                proj.moveDown();
             }
         }
 
@@ -119,7 +141,9 @@ class Game{
 
     processActions(){
         for(let index in this.Enemies){
+
             let en = this.Enemies[index];
+
             if(Math.random() >= 0.99){
                 let proj = this.createProjectile(en,"enemy_projectile.svg");
                 proj.appendTo(this.Screen);
@@ -135,39 +159,29 @@ class Game{
         this.processActions();
     }
 
-    initializeEnemies(){
-        let y = 5;
-        let x = 2.5;
-        for(let i = 0;i < this.Enemies.length;i++){
-            if(this.Enemies[i].getState() == "Alive"){
-                this.Enemies[i].setX(x + "%");
-                this.Enemies[i].setY(y + "%");
-                if(x > 90){
-                    x = 2.5;
-                    y += 15;
-                }
-                else{
-                    x += 10;  
-                }
-            }      
-        }  
+    initializeEnemies(amount){
+
+        for(let i=0;i<amount;i++){
+            let enemy = new Enemy("enemy_"+i); 
+            enemy.setImg("cat.svg")
+            this.Enemies.push(enemy);  
+        }
+
+        this.positionEnemies();
+        
     }
 
     initializePlayer(){
+        this.Player = new Ship("player");
+        this.Player.setImg("ship.svg");
         this.Player.setX("45%");
         this.Player.setY("90%");
     }
 
     startGame(enemies){
 
-        this.Player = this.createGameObject("player","ship.svg");
         this.initializePlayer();
-
-        for(let i=0;i<enemies;i++){
-            let enemy = this.createGameObject("enemy_"+i,"cat.svg");
-            this.Enemies.push(enemy);  
-        }
-        this.initializeEnemies();
+        this.initializeEnemies(enemies);
         
         this.drawGame();   
         

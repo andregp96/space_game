@@ -14,11 +14,22 @@ body{
 
 .game_object{
     position: absolute;
-    width:5%;
-    height:5%;
     display: inline-block;
     background-color:transparent;
     margin:0px;
+}
+
+.ship{
+    width:5%;
+    height:5%;
+}
+
+.projectile{
+    width:0.25%;
+}
+
+.enemy{
+    width:2%;
 }
 
 .game_object img{

@@ -93,14 +93,6 @@ class GameObject{
         }
     }
 
-    moveRight(){
-        this.setX(this.x+20);
-    }
-
-    moveLeft(){
-        this.setX(this.x-20);
-    }
-
     checkCollision(projectile){
         if(
             (projectile.getY() >= this.y && projectile.getY() <= this.y + this.getPxValue("height")) &&

@@ -2,7 +2,7 @@ var game;
 
 function createGame(){
     game = new Game();
-    game.startGame(20);
+    game.startGame(46);
 }
 
 function redraw(){
