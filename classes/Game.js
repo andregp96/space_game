@@ -144,7 +144,7 @@ class Game{
 
             let en = this.Enemies[index];
 
-            if(Math.random() >= 0.99){
+            if(Math.random() >= 0.991){
                 let proj = this.createProjectile(en,"enemy_projectile.svg");
                 proj.appendTo(this.Screen);
                 this.EnemyProjectiles.push(proj);
