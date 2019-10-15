@@ -26,6 +26,7 @@ body{
 
 .projectile{
     width:0.25%;
+    box-shadow: 0 0 1em white;
 }
 
 .enemy{

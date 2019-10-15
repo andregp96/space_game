@@ -7,15 +7,17 @@ class Game{
     EnemyProjectiles = []
     Keys = {};
     MainLoop;
+    Difficulty = [0.999,0.9997,0.995];
+    DifficultyLevel = 0;
 
     setKey(code,value){
         this.Keys[code] = value;
     }
 
-    createProjectile(obj,src){
-        let proj = new Projectile("projectile");
-        proj.setX(-1 + obj.getX() + obj.getPxValue("width")/2);
-        proj.setY(obj.getY()- obj.getPxValue("height")); 
+    createProjectile(obj,src,type){
+        let proj = new Projectile("projectile",type);
+        proj.setX(-1 + obj.getX() + obj.getWidth()/2);
+        proj.setY(obj.getY()- obj.getHeight()); 
         proj.setImg(src);
 
         return proj;
@@ -136,7 +138,12 @@ class Game{
             }
         }
 
-        
+        for(let index in this.Enemies){
+            if(!this.Enemies[index].moveLeft()){
+                this.Enemies[index].moveRight();
+            }
+        }     
+   
     }
 
     processActions(){
@@ -144,8 +151,8 @@ class Game{
 
             let en = this.Enemies[index];
 
-            if(Math.random() >= 0.991){
-                let proj = this.createProjectile(en,"enemy_projectile.svg");
+            if(Math.random() >= this.Difficulty[this.DifficultyLevel]){
+                let proj = this.createProjectile(en,"enemy_projectile.svg",1);
                 proj.appendTo(this.Screen);
                 this.EnemyProjectiles.push(proj);
             }        
@@ -173,7 +180,6 @@ class Game{
 
     initializePlayer(){
         this.Player = new Ship("player");
-        this.Player.setImg("ship.svg");
         this.Player.setX("45%");
         this.Player.setY("90%");
     }
@@ -193,7 +199,7 @@ class Game{
     }
 
     shoot(){
-        let proj = this.createProjectile(this.Player,"player_projectile.svg");
+        let proj = this.createProjectile(this.Player,"player_projectile.svg",0);
         proj.appendTo(this.Screen);
         this.PlayerProjectiles.push(proj);
     }

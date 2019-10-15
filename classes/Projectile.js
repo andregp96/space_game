@@ -1,25 +1,32 @@
 class Projectile extends GameObject{
 
-    constructor(id){
+    constructor(id,type){
         super(id);
-        this.screen_element.classList.add("projectile");
+        this.ScreenElement.classList.add("projectile");
+
+        if(type == 0){
+            this.setImg("player_projectile.svg");
+        }
+        else{
+            this.setImg("enemy_projectile.svg");
+        }
     }
 
     moveUp(){
-        if(this.y - 5 < 0){
+        if(this.y - 10 < 0){
             this.state = "Dead";
         }
         else{
-            this.setY(this.y-5);
+            this.setY(this.y-10);
         }
     }
 
     moveDown(){
-        if(this.y + 5 > window.innerHeight){
+        if(this.y + 10 > window.innerHeight){
             this.state = "Dead";
         }
         else{
-            this.setY(this.y+5);
+            this.setY(this.y+10);
         }
         
     }

@@ -1,32 +1,32 @@
 class GameObject{
 
-    screen_element = document.createElement("div");
-    state = "Alive";
-    appended = false;
-    img = document.createElement("img");
+    ScreenElement = document.createElement("div");
+    State = "Alive";
+    Appended = false;
+    Img = document.createElement("img");
     x = 0;
     y = 0;
 
     constructor(id){
-        this.screen_element.classList.add("game_object");
-        this.screen_element.id = id;
+        this.ScreenElement.classList.add("game_object");
+        this.ScreenElement.id = id;
     }
 
     getState(){
-        return this.state;
+        return this.State;
     }
 
     appendTo(parent){
-        parent.append(this.screen_element);
-        this.appended = true;
+        parent.append(this.ScreenElement);
+        this.Appended = true;
 
-        this.setY(this.getPxValue("top"));
-        this.setX(this.getPxValue("left"));
+        this.setY(this.getAbsoluteY());
+        this.setX(this.getAbsoluteX());
     }
 
     setImg(src){
-        this.img.src = src;
-        this.screen_element.append(this.img);
+        this.Img.src = src;
+        this.ScreenElement.append(this.Img);
     }
 
     setX(value){
@@ -35,16 +35,19 @@ class GameObject{
             this.setPctValue(value,"left");
         }
         else{ 
-            this.setPxValue(value,"left");
+            this.setPXValue(value,"left");
         }
-        if(this.appended == true){
-            this.x = this.getPxValue("left");   
 
-            if(this.x + this.getPxValue("width") > window.innerWidth){
-                this.setX(window.innerWidth - this.getPxValue("width"));
+        if(this.Appended == true){
+            this.x = this.getAbsoluteX();   
+
+            if(this.x + this.getWidth() > window.innerWidth){
+                this.setX(window.innerWidth - this.getWidth());
+                return true;
             }
             if(this.x < 0){
                 this.setX(0);
+                return false;
             }
         }      
     }
@@ -55,48 +58,53 @@ class GameObject{
             this.setPctValue(value,"top");
         }
         else{
-            this.setPxValue(value,"top");
+            this.setPXValue(value,"top");
         }
-        if(this.appended == true){
-            this.y = this.getPxValue("top");
+        if(this.Appended == true){
+            this.y = this.getAbsoluteY();
         }
     }
 
-    setPxValue(value,property){
-        this.screen_element.style[property] = value+"px";
+    setPXValue(value,property){
+        this.ScreenElement.style[property] = value+"pX";
     }
 
     setPctValue(value,property){
-        this.screen_element.style[property] = value;
+        this.ScreenElement.style[property] = value;
     }
 
     getX(){
         return this.x;
     }
 
+    getAbsoluteX(){
+        let style_list = getComputedStyle(this.ScreenElement);
+        return parseFloat(style_list["left"]);
+    }
+
     getY(){
         return this.y;
     }
 
-    getScreenElement(){
-        return this.screen_element;
+    getAbsoluteY(){
+        let style_list = getComputedStyle(this.ScreenElement);
+        return parseFloat(style_list["top"]);
     }
 
-    getPxValue(property){
-        let style_list = getComputedStyle(this.screen_element);
-        let value = parseFloat(style_list[property]);
-        if(value == NaN){
-            throw "Valor não numérico retornado para propriedade" + property;
-        }
-        else{
-            return value;
-        }
+    getWidth(){
+        let style_list = getComputedStyle(this.ScreenElement);
+        return parseFloat(style_list["width"]);
+    }
+
+    getHeight(){
+        let style_list = getComputedStyle(this.ScreenElement);
+        return parseFloat(style_list["height"]);
     }
 
     checkCollision(projectile){
         if(
-            (projectile.getY() >= this.y && projectile.getY() <= this.y + this.getPxValue("height")) &&
-            (projectile.getX() >= this.x && projectile.getX() <= this.x + this.getPxValue("width"))
+            (projectile.getY() >= this.y && projectile.getY() <= this.y + this.getHeight()) &&
+            (projectile.getX() >= this.x && projectile.getX() <= this.x + this.getWidth())
         ){
             return true;
         }
@@ -106,8 +114,8 @@ class GameObject{
     }
 
     destroy(){
-        this.screen_element.remove();
-        delete this.screen_element;
+        this.ScreenElement.remove();
+        delete this.ScreenElement;
         delete this;
     }
 }
