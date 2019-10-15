@@ -136,13 +136,7 @@ class Game{
             else{
                 proj.moveDown();
             }
-        }
-
-        for(let index in this.Enemies){
-            if(!this.Enemies[index].moveLeft()){
-                this.Enemies[index].moveRight();
-            }
-        }     
+        }   
    
     }
 

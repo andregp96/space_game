@@ -14,7 +14,7 @@ class Projectile extends GameObject{
 
     moveUp(){
         if(this.y - 10 < 0){
-            this.state = "Dead";
+            this.State = "Dead";
         }
         else{
             this.setY(this.y-10);
@@ -23,7 +23,7 @@ class Projectile extends GameObject{
 
     moveDown(){
         if(this.y + 10 > window.innerHeight){
-            this.state = "Dead";
+            this.State = "Dead";
         }
         else{
             this.setY(this.y+10);
