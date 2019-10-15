@@ -6,10 +6,10 @@ class Enemy extends GameObject{
     }
 
     moveRight(){
-        return this.setX(this.x+10);
+        return this.setX(this.x+2);
     }
 
     moveLeft(){
-        return this.setX(this.x-10);
+        return this.setX(this.x-2);
     }
 }

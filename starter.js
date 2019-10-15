@@ -2,7 +2,7 @@ var game;
 
 function createGame(){
     game = new Game();
-    game.startGame(46);
+    game.initializeGame(46);
 }
 
 function redraw(){
@@ -15,9 +15,23 @@ function redraw(){
 document.addEventListener('keydown',function(key){game.setKey(key.keyCode,true)});
 document.addEventListener('keyup',function(key){game.setKey(key.keyCode,false)});
 document.addEventListener("keypress",function(key){
-    if(key.keyCode == 32){
-        game.shoot();
+    switch(key.keyCode){
+        case 32:
+            game.shoot();
+        break;
+
+        case 112:
+            if(game.State){
+                game.stopGame();
+            }
+            else{
+                game.startGame();
+            }
+        break;
+
+        
     }
+
 });
 window.addEventListener("resize",function(){redraw()});
 
