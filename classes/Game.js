@@ -2,6 +2,7 @@ class Game{
 
     Screen = document.getElementById("screen");
     State = false;
+    Engine = new GameEngine();
     ScreenObjects = {
         "Player": undefined,
         "Enemies": [],
@@ -12,13 +13,13 @@ class Game{
         "DifficultyLevel": 0,
         "ShootFrequency": [0.999,0.9997,0.995]
     }
-    Keys = {};
+    
     MainLoop = undefined;
     SecondaryLoop = undefined;
 
 
     setKey(code,value){
-        this.Keys[code] = value;
+       this.Engine.Keys[code] = value;
     }
 
     createProjectile(obj,src,type){
@@ -70,70 +71,9 @@ class Game{
         this.positionEnemies();
     }
 
-   
-
-    processInput(){
-        for(let key in this.Keys){
-            if(this.Keys[key]){
-                switch(key){
-                    case "39":
-                        this.ScreenObjects.Player.moveRight();
-                    break;
-                
-                    case "37":
-                        this.ScreenObjects.Player.moveLeft();
-                    break;
-        
-                }
-            }
-        }  
-    }
-
-    processCollision(){
-
-        for(let i in this.ScreenObjects.PlayerProjectiles){
-
-            let proj = this.ScreenObjects.PlayerProjectiles[i];
-
-            for(let j in this.ScreenObjects.Enemies){
-                let en = this.ScreenObjects.Enemies[j];
-                if(en.checkCollision(proj) == true){
-                    this.ScreenObjects.Enemies.splice(j,1);
-                    en.destroy();
-                    this.ScreenObjects.PlayerProjectiles.splice(i,1);
-                    proj.destroy();
-                }
-            }
-        }
-
-        for(let i in this.ScreenObjects.EnemyProjectiles){
-
-            let proj = this.ScreenObjects.EnemyProjectiles[i];
-
-            if(this.ScreenObjects.Player.checkCollision(proj) == true){
-                this.ScreenObjects.EnemyProjectiles.splice(i,1);
-                proj.destroy();
-                this.ScreenObjects.Player.destroy();
-                this.stopGame();     
-            }
-        }
-        
-    }
-
     processMovement(){
 
-        for(let index in this.ScreenObjects.PlayerProjectiles){
-
-            let proj = this.ScreenObjects.PlayerProjectiles[index];
-            if(proj.getState() == "Dead"){
-                this.ScreenObjects.PlayerProjectiles.splice(index,1);
-                proj.destroy();
-            }
-            else{
-                proj.moveUp();
-            }
-            
-        }
+        
 
         for(let index in this.ScreenObjects.EnemyProjectiles){
 
@@ -179,10 +119,12 @@ class Game{
     }
 
     gameLoop(){ //coisas que devem acontecer a cada iteração, sem exceções, como o movimento de projéteis e a captação de input do jogador
-        this.processCollision();
+        this.Engine.processCollision(this.ScreenObjects.Enemies,this.ScreenObjects.PlayerProjectiles);
+        this.Engine.processCollision([this.ScreenObjects.Player],this.ScreenObjects.EnemyProjectiles);
+        this.Engine.processProjectiles(this.ScreenObjects.PlayerProjectiles,"top");
+        this.Engine.processProjectiles(this.ScreenObjects.EnemyProjectiles,"bottom");
+        this.Engine.processInput(this.ScreenObjects.Player);  
         this.processActions();
-        this.processInput();  
-        this.processMovement();
     }
 
 
