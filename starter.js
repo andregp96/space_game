@@ -1,20 +1,24 @@
-var game;
-
-function createGame(){
-    game = new Game();
-    game.initializeGame(46);
-}
+var game = undefined;
 
 function redraw(){
     if(game != undefined){
         game.resizeGame();
     }
-   
 }
 
-document.addEventListener('keydown',function(key){game.setKey(key.keyCode,true)});
-document.addEventListener('keyup',function(key){game.setKey(key.keyCode,false)});
-document.addEventListener("keypress",function(key){
+function iniciaJogo(dificuldade) {
+    game = new Game();
+    document.getElementById('menu').style.display = "none";
+    document.getElementById('screen').style.display = "block";
+    game.initializeGame(dificuldade);
+
+    document.addEventListener('keydown',function(key){game.setKey(key.keyCode,true)});
+    document.addEventListener('keyup',function(key){game.setKey(key.keyCode,false)});
+   
+    document.addEventListener("keypress",function(key){
+    if(game == undefined){
+        return false;
+    }
     switch(key.keyCode){
         case 32:
             game.shoot();
@@ -34,5 +38,5 @@ document.addEventListener("keypress",function(key){
 
 });
 window.addEventListener("resize",function(){redraw()});
+}
 
-createGame();

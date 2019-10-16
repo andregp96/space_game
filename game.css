@@ -1,0 +1,26 @@
+.game_object{
+    position: absolute;
+    display: inline-block;
+    background-color:transparent;
+    margin:0px;
+}
+
+.ship{
+    width:5%;
+    height:5%;
+}
+
+.projectile{
+    width:0.25%;
+    box-shadow: 0 0 1em white;
+}
+
+.enemy{
+    width:2%;
+    transition: left 0.5s;
+}
+
+.game_object img{
+    width:100%;
+    height:auto;
+}

@@ -6,6 +6,7 @@
         <meta name='viewport' content="width=device-width">
         <title>SG</title>
         <link rel='stylesheet' type='text/css' href='default.css'>
+        <link rel='stylesheet' type='text/css' href='game.css'>
         <script src='classes/GameObject.js'></script>
         <script src='classes/Ship.js'></script>
         <script src='classes/Enemy.js'></script>
@@ -14,8 +15,15 @@
         <script src='classes/Game.js'></script>
     </head>
     <body>    
-        <div class='background' id='screen'>
+        <div id='menu' class='menu'>
+            <h2 style='margin:0px'>Escolha uma dificuldade para iniciar o jogo:</h2>
+            <input type='button' onclick="iniciaJogo(0)" value="Baixa">
+            <input type='button' onclick="iniciaJogo(1)" value="Media">
+            <input type='button' onclick="iniciaJogo(2)" value="Alta">
+        </div>
 
+        <div class='background' id='screen' style='display: none'>
+            
         </div>
     </body>
 

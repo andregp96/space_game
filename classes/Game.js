@@ -11,7 +11,7 @@ class Game{
     };
     Config = {
         "DifficultyLevel": 0,
-        "ShootFrequency": [0.999,0.9997,0.995]
+        "ShootFrequency": [0.999,0.996,0.995]
     }
     
     MainLoop = undefined;
@@ -138,10 +138,12 @@ class Game{
         this.ScreenObjects.Player.setY("90%");
     }
 
-    initializeGame(enemies){
+    initializeGame(level){
+
+        this.Config.DifficultyLevel = level;
 
         this.initializePlayer();
-        this.initializeEnemies(enemies);
+        this.initializeEnemies((level+1) * 23);
         
         this.drawGame();   
         this.startGame();
