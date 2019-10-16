@@ -22,11 +22,10 @@ class Game{
        this.Engine.Keys[code] = value;
     }
 
-    createProjectile(obj,src,type){
+    createProjectile(obj,type){
         let proj = new Projectile("projectile",type);
         proj.setX(-1 + obj.getX() + obj.getWidth()/2);
         proj.setY(obj.getY()- obj.getHeight()); 
-        proj.setImg(src);
 
         return proj;
     }
@@ -73,35 +72,22 @@ class Game{
 
     processMovement(){
 
-        
 
-        for(let index in this.ScreenObjects.EnemyProjectiles){
+        if(Math.random() > 0.5){
+            for(let index in this.ScreenObjects.Enemies){
 
-            let proj = this.ScreenObjects.EnemyProjectiles[index]; 
-            if(proj.getState() == "Dead"){
-                this.ScreenObjects.EnemyProjectiles.splice(index,1);
-                proj.destroy();
-            }
-            else{
-                proj.moveDown();
-            }
-        } 
-
-        // if(Math.random() > 0.5){
-        //     for(let index in this.ScreenObjects.Enemies){
-
-        //         let en = this.ScreenObjects.Enemies[index]; 
-        //         en.moveLeft();
+                let en = this.ScreenObjects.Enemies[index]; 
+                en.moveLeft();
     
-        //     } 
-        // }
-        // else{
-        //     for(let index in this.ScreenObjects.Enemies){
+            } 
+        }
+        else{
+            for(let index in this.ScreenObjects.Enemies){
 
-        //         let en = this.ScreenObjects.Enemies[index]; 
-        //         en.moveRight();
-        //     } 
-        // }
+                let en = this.ScreenObjects.Enemies[index]; 
+                en.moveRight();
+            } 
+        }
          
     }
 
@@ -111,7 +97,7 @@ class Game{
             let en = this.ScreenObjects.Enemies[index];
 
             if(Math.random() >= this.Config.ShootFrequency[this.Config.DifficultyLevel]){
-                let proj = this.createProjectile(en,"enemy_projectile.svg",1);
+                let proj = this.createProjectile(en,1);
                 proj.appendTo(this.Screen);
                 this.ScreenObjects.EnemyProjectiles.push(proj);
             }        
@@ -125,6 +111,12 @@ class Game{
         this.Engine.processProjectiles(this.ScreenObjects.EnemyProjectiles,"bottom");
         this.Engine.processInput(this.ScreenObjects.Player);  
         this.processActions();
+        
+    }
+
+    moveLoop(){
+        this.gameLoop();
+        this.processMovement();
     }
 
 
@@ -157,17 +149,19 @@ class Game{
 
     stopGame(){
         clearInterval(this.MainLoop);
+        clearInterval(this.SecondaryLoop);
         this.State = false;
     }
 
     startGame(){
         this.MainLoop = setInterval(() => {this.gameLoop()}, 20);
+        this.SecondaryLoop = setInterval(() => {this.moveLoop()}, 500);
         this.State = true;
     }
     
 
     shoot(){
-        let proj = this.createProjectile(this.ScreenObjects.Player,"player_projectile.svg",0);
+        let proj = this.createProjectile(this.ScreenObjects.Player,0);
         proj.appendTo(this.Screen);
         this.ScreenObjects.PlayerProjectiles.push(proj);
     }

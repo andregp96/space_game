@@ -18,7 +18,6 @@ class GameEngine{
         } 
     }
 
-
     processInput(player){
         for(let key in this.Keys){
             if(this.Keys[key]){
