@@ -11,8 +11,12 @@ class GameEngine{
                 if(tg.checkCollision(proj) == true){
                     targets.splice(j,1);
                     tg.destroy();
+                    tg = undefined;
+
                     projectiles.splice(i,1);
                     proj.destroy();
+                    proj = undefined;
+                    break;
                 }
             }
         } 
@@ -43,6 +47,7 @@ class GameEngine{
                 if(proj.getState() == "Dead"){
                     projectiles.splice(i,1);
                     proj.destroy();
+                    proj = undefined;
                 }
                 else{
                     proj.moveUp();
@@ -56,6 +61,7 @@ class GameEngine{
                 if(proj.getState() == "Dead"){
                     projectiles.splice(i,1);
                     proj.destroy();
+                    proj = undefined;
                 }
                 else{
                     proj.moveDown();

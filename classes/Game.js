@@ -115,7 +115,6 @@ class Game{
     }
 
     moveLoop(){
-        this.gameLoop();
         this.processMovement();
     }
 

@@ -42,11 +42,11 @@ class GameObject{
             this.x = this.getAbsoluteX();   
 
             if(this.x + this.getWidth() > window.innerWidth){
-                this.setX(window.innerWidth - this.getWidth());
+                this.setPXValue(window.innerWidth - this.getWidth(),"left");
                 return true;
             }
             if(this.x < 0){
-                this.setX(0);
+                this.setPXValue(0,"left");
                 return false;
             }
         }      
@@ -115,7 +115,6 @@ class GameObject{
 
     destroy(){
         this.ScreenElement.remove();
-        delete this.ScreenElement;
-        delete this;
+        this.ScreenElement = undefined;
     }
 }
