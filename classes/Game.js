@@ -11,7 +11,7 @@ class Game{
     };
     Config = {
         "DifficultyLevel": 0,
-        "ShootFrequency": [0.999,0.996,0.995]
+        "ShootFrequency": [0.999,0.997,0.995]
     }
     
     MainLoop = undefined;
