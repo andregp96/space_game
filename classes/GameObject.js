@@ -4,6 +4,7 @@ class GameObject{
     State = "Alive";
     Appended = false;
     Img = document.createElement("img");
+    Speed = undefined;
     x = 0;
     y = 0;
 

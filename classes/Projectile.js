@@ -3,6 +3,7 @@ class Projectile extends GameObject{
     constructor(id,type){
         super(id);
         this.ScreenElement.classList.add("projectile");
+        this.Speed = 10;
 
         if(type == 0){
             this.setImg("player_projectile.svg");
@@ -17,7 +18,7 @@ class Projectile extends GameObject{
             this.State = "Dead";
         }
         else{
-            this.setY(this.y-10);
+            this.setY(this.y-this.Speed);
         }
     }
 
@@ -26,7 +27,7 @@ class Projectile extends GameObject{
             this.State = "Dead";
         }
         else{
-            this.setY(this.y+10);
+            this.setY(this.y+this.Speed);
         }
         
     }

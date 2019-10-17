@@ -70,25 +70,18 @@ class Game{
         this.positionEnemies();
     }
 
-    processMovement(){
-
-
-        if(Math.random() > 0.5){
-            for(let index in this.ScreenObjects.Enemies){
-
-                let en = this.ScreenObjects.Enemies[index]; 
-                en.moveLeft();
-    
-            } 
+    processMovement(direction){
+        if(direction){
+            var func = function(obj){obj.moveRight()};
         }
         else{
-            for(let index in this.ScreenObjects.Enemies){
-
-                let en = this.ScreenObjects.Enemies[index]; 
-                en.moveRight();
-            } 
+            var func = function(obj){obj.moveLeft()};
         }
-         
+
+        for(let index in this.ScreenObjects.Enemies){
+            let en = this.ScreenObjects.Enemies[index]; 
+            func(en);
+        }
     }
 
     processActions(){
@@ -111,6 +104,7 @@ class Game{
         this.Engine.processProjectiles(this.ScreenObjects.EnemyProjectiles,"bottom");
         this.Engine.processInput(this.ScreenObjects.Player);  
         this.processActions();
+        this.processMovement();
         
     }
 
@@ -150,13 +144,13 @@ class Game{
 
     stopGame(){
         clearInterval(this.MainLoop);
-        clearInterval(this.SecondaryLoop);
+        // clearInterval(this.SecondaryLoop);
         this.State = false;
     }
 
     startGame(){
         this.MainLoop = setInterval(() => {this.gameLoop()}, 20);
-        this.SecondaryLoop = setInterval(() => {this.moveLoop()}, 500);
+        // this.SecondaryLoop = setInterval(() => {this.moveLoop()}, 500);
         this.State = true;
     }
     
