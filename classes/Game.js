@@ -91,6 +91,9 @@ class Game{
         if(this.Engine.processCollision([this.ScreenObjects.Player],this.ScreenObjects.EnemyProjectiles)){
             this.stopGame();
         }
+        if(this.Engine.processCollision([this.ScreenObjects.Player],this.ScreenObjects.Enemies)){
+            this.stopGame();
+        }
         this.Engine.processProjectiles(this.ScreenObjects.PlayerProjectiles,"top");
         this.Engine.processProjectiles(this.ScreenObjects.EnemyProjectiles,"bottom");
         this.processMovement();
