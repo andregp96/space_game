@@ -65,16 +65,10 @@ class Game{
     }
 
     processMovement(direction){
-        if(direction){
-            var func = function(obj){obj.moveRight()};
-        }
-        else{
-            var func = function(obj){obj.moveLeft()};
-        }
 
         for(let index in this.ScreenObjects.Enemies){
             let en = this.ScreenObjects.Enemies[index]; 
-            func(en);
+            en.move();
         }
     }
 
@@ -92,13 +86,16 @@ class Game{
     }
 
     gameLoop(){ //coisas que devem acontecer a cada iteração, sem exceções, como o movimento de projéteis e a captação de input do jogador
+        
         this.Engine.processCollision(this.ScreenObjects.Enemies,this.ScreenObjects.PlayerProjectiles);
-        this.Engine.processCollision([this.ScreenObjects.Player],this.ScreenObjects.EnemyProjectiles);
+        if(this.Engine.processCollision([this.ScreenObjects.Player],this.ScreenObjects.EnemyProjectiles)){
+            this.stopGame();
+        }
         this.Engine.processProjectiles(this.ScreenObjects.PlayerProjectiles,"top");
         this.Engine.processProjectiles(this.ScreenObjects.EnemyProjectiles,"bottom");
+        this.processMovement();
         this.Engine.processInput(this.ScreenObjects.Player);  
         this.processActions();
-        this.processMovement();
         
     }
 

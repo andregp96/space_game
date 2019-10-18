@@ -3,14 +3,14 @@ class Enemy extends GameObject{
     constructor(id){
         super(id);
         this.ScreenElement.classList.add("enemy");
-        this.Speed = 1
+        this.Speed = 1;
     }
 
-    moveRight(){
-        return this.setX(this.x+this.Speed);
-    }
-
-    moveLeft(){
-        return this.setX(this.x-this.Speed);
+    
+    move(){
+        if(!this.setX(this.x + this.Speed)){
+            this.Speed = -this.Speed;
+            this.setY(this.y + this.getHeight());
+        }
     }
 }

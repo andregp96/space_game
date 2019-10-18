@@ -31,6 +31,13 @@ class GameObject{
     }
 
     setX(value){
+    
+        if(this.Appended == true){
+            if(this.getWidth() + value > window.innerWidth || value < 0){
+                return false;
+            }
+        }     
+        
         value= value.toString();
         if(value.search("%") == value.length - 1){
             this.setPctValue(value,"left");
@@ -39,18 +46,8 @@ class GameObject{
             this.setPXValue(value,"left");
         }
 
-        if(this.Appended == true){
-            this.x = this.getAbsoluteX();   
-
-            if(this.x + this.getWidth() > window.innerWidth){
-                this.setPXValue(window.innerWidth - this.getWidth(),"left");
-                return true;
-            }
-            if(this.x < 0){
-                this.setPXValue(0,"left");
-                return false;
-            }
-        }      
+        this.x = this.getAbsoluteX();
+        return true;
     }
 
     setY(value){
@@ -64,6 +61,8 @@ class GameObject{
         if(this.Appended == true){
             this.y = this.getAbsoluteY();
         }
+
+        return true;
     }
 
     setPXValue(value,property){
@@ -113,6 +112,22 @@ class GameObject{
             return false;
         }
     }
+
+    // moveRight(){
+    //     return this.setX(this.x+this.Speed);
+    // }
+
+    // moveLeft(){
+    //     return this.setX(this.x-this.Speed);
+    // }
+
+    // moveUp(){
+    //     return this.setY(this.y-this.Speed);
+    // }
+
+    // moveDown(){
+    //     return this.setY(this.y+this.Speed);
+    // }
 
     destroy(){
         this.ScreenElement.remove();

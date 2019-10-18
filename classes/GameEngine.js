@@ -3,6 +3,8 @@ class GameEngine{
     Keys = {};
 
     processCollision(targets, projectiles){
+        let result = false;
+
         for(let i in projectiles){
             let proj = projectiles[i];
 
@@ -16,10 +18,14 @@ class GameEngine{
                     projectiles.splice(i,1);
                     proj.destroy();
                     proj = undefined;
+                    
+                    result = true;
+                    
                     break;
                 }
             }
         } 
+        return result;
     }
 
     processInput(player){

@@ -17,7 +17,6 @@
 
 .enemy{
     width:2%;
-    transition: left 0.5s;
 }
 
 .game_object img{
