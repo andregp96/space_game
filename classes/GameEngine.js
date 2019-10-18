@@ -70,4 +70,12 @@ class GameEngine{
         }
         
     }
+
+    spawnProjectile(obj,type){
+        let proj = new Projectile("projectile",type);
+        proj.setX(-1 + obj.getX() + obj.getWidth()/2);
+        proj.setY(obj.getY()- obj.getHeight()); 
+
+        return proj;
+    }
 }

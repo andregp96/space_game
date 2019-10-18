@@ -22,13 +22,7 @@ class Game{
        this.Engine.Keys[code] = value;
     }
 
-    createProjectile(obj,type){
-        let proj = new Projectile("projectile",type);
-        proj.setX(-1 + obj.getX() + obj.getWidth()/2);
-        proj.setY(obj.getY()- obj.getHeight()); 
 
-        return proj;
-    }
 
     createGameObject(id,src){
         let obj = new GameObject(id);
@@ -90,7 +84,7 @@ class Game{
             let en = this.ScreenObjects.Enemies[index];
 
             if(Math.random() >= this.Config.ShootFrequency[this.Config.DifficultyLevel]){
-                let proj = this.createProjectile(en,1);
+                let proj = this.Engine.spawnProjectile(en,1);
                 proj.appendTo(this.Screen);
                 this.ScreenObjects.EnemyProjectiles.push(proj);
             }        
@@ -156,7 +150,7 @@ class Game{
     
 
     shoot(){
-        let proj = this.createProjectile(this.ScreenObjects.Player,0);
+        let proj = this.Engine.spawnProjectile(this.ScreenObjects.Player,0);
         proj.appendTo(this.Screen);
         this.ScreenObjects.PlayerProjectiles.push(proj);
     }
