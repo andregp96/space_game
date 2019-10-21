@@ -3,7 +3,7 @@ class Ship extends GameObject{
     constructor(id){
         super(id);
         this.ScreenElement.classList.add("ship");
-        this.setImg("ship.svg");
+        this.setImg("img/ship.svg");
     }
 
     moveRight(){

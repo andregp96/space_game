@@ -6,10 +6,10 @@ class Projectile extends GameObject{
         this.Speed = 10;
 
         if(type == 0){
-            this.setImg("player_projectile.svg");
+            this.setImg("img/player_projectile.svg");
         }
         else{
-            this.setImg("enemy_projectile.svg");
+            this.setImg("img/enemy_projectile.svg");
         }
     }
 

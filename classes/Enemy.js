@@ -6,7 +6,7 @@ class Enemy extends GameObject{
         super(id);
         this.ScreenElement.classList.add("enemy");
         this.Speed = 1;
-        this.setImg("cat.svg")
+        this.setImg("img/cat.svg")
         this.Firerate = firerate;
     }
 
