@@ -113,6 +113,15 @@ class GameObject{
         }
     }
 
+    checkAllignement(obj){
+        if(obj.getX() >= this.x && obj.getX() <= this.x + this.getWidth()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     // moveRight(){
     //     return this.setX(this.x+this.Speed);
     // }
