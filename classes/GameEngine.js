@@ -47,13 +47,16 @@ class GameEngine{
     initializeEnemies(amount, firerate){
         let x = 4;
         let y = 2;
+        let speed_factor = 1;
         
         for(let i = 0;i < amount;i++){
             this.spawnEnemy('enemy_'+i,x+'%',y+'%',firerate);
+            this.Enemies[i].setSpeed(this.Enemies[i].getSpeed() * speed_factor);
             
             if(x > 90){
                 x = 4;
                 y += 8;
+                speed_factor = -speed_factor;
             }
             else{
                 x += 4;  

@@ -66,11 +66,15 @@ class GameObject{
     }
 
     setPXValue(value,property){
-        this.ScreenElement.style[property] = value+"pX";
+        this.ScreenElement.style[property] = value+"px";
     }
 
     setPctValue(value,property){
         this.ScreenElement.style[property] = value;
+    }
+
+    setSpeed(value){
+        this.Speed = value;
     }
 
     getX(){
@@ -99,6 +103,10 @@ class GameObject{
     getHeight(){
         let style_list = getComputedStyle(this.ScreenElement);
         return parseFloat(style_list["height"]);
+    }
+
+    getSpeed(){
+        return this.Speed;
     }
 
     checkCollision(projectile){
