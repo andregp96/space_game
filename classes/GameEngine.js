@@ -28,8 +28,8 @@ class GameEngine{
 
     spawnProjectile(obj,type){
         let proj = new Projectile("projectile",type);
-        proj.setX(-1 + obj.getX() + obj.getWidth()/2);
-        proj.setY(obj.getY()- obj.getHeight()); 
+        proj.setX(-2 + obj.getX() + obj.getWidth()/2);
+        proj.setY(obj.getY() + 10); 
 
         this.Projectiles[type].push(proj);
         this.addToScreen(proj);
@@ -162,9 +162,11 @@ class GameEngine{
     
 
     update(){
+        let status = true;
+
         this.processCollision(this.Enemies,this.Projectiles[0]);
-        this.processCollision([this.Player],this.Projectiles[1]);
-        this.processCollision([this.Player],this.Enemies);
+        if(this.processCollision([this.Player],this.Projectiles[1])){status = false;} 
+        if(this.processCollision([this.Player],this.Enemies)){status = false;}
 
         this.processProjectiles(this.Projectiles[0],"top");
         this.processProjectiles(this.Projectiles[1],"down");
@@ -172,5 +174,7 @@ class GameEngine{
         this.processEnemyBehavior(this.Enemies,this.Player);
 
         this.processInput(this.Player);    
+
+        return status;
     }
 }

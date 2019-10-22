@@ -15,7 +15,9 @@ class Game{
     }
 
     gameLoop(){ //coisas que devem acontecer a cada iteração, sem exceções, como o movimento de projéteis e a captação de input do jogador
-        this.Engine.update();
+        if(!this.Engine.update()){
+            this.stopGame();
+        }
     }
 
     initializeGame(level){
