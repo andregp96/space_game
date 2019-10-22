@@ -25,3 +25,13 @@
     width:100%;
     height:auto;
 }
+
+.background{                    
+    background-repeat: repeat-y;
+    background-position: center center;  
+}
+
+.background img{
+    height: 100%;
+    width: 100%;
+}

@@ -7,6 +7,10 @@ class GameEngine{
         [],
         []
     ];
+    Background = [
+        new GameObject("panel1"),
+        new GameObject("panel2")
+    ]
     Screen = document.getElementById("screen");
 
 
@@ -14,7 +18,7 @@ class GameEngine{
         let rates = [0.999,0.997,0.995];
         this.initializeEnemies((diff_level+1) * 23,rates[diff_level]);
         this.initializePlayer();
-
+        this.initializeBackground();
     }
 
     addToScreen(obj){
@@ -69,6 +73,23 @@ class GameEngine{
         this.Player.setY("90%");
 
         this.addToScreen(this.Player);
+    }
+
+    //TODO: migrar para objeto próprio
+    initializeBackground(){
+        this.Background[0].setX(0);
+        this.Background[0].setY(0);
+        this.Background[0].setImg("img/bg.png");
+        this.Background[0].ScreenElement.classList.add('background');
+        this.Background[0].appendTo(this.Screen);
+
+        this.Background[1].setX(0);
+        this.Background[1].setY('-100%');
+        this.Background[1].setImg("img/bg.png");
+        this.Background[1].ScreenElement.classList.add('background');
+        this.Background[1].appendTo(this.Screen);
+        
+        
     }
 
     shoot(){
@@ -159,7 +180,16 @@ class GameEngine{
         }   
     }
 
-    
+    processBackgroundAnimation(){
+        //TODO: migrar para objeto próprio
+        this.Background[0].setY(this.Background[0].getY() + 3);
+        this.Background[1].setY(this.Background[1].getY() + 3);
+
+        if(this.Background[0].getY() > window.innerHeight){
+            this.Background[0].setY(0);
+            this.Background[1].setY('-100%');
+        }
+    }
 
     update(){
         let status = true;
@@ -172,6 +202,8 @@ class GameEngine{
         this.processProjectiles(this.Projectiles[1],"down");
 
         this.processEnemyBehavior(this.Enemies,this.Player);
+
+        this.processBackgroundAnimation();
 
         this.processInput(this.Player);    
 
