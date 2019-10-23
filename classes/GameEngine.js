@@ -7,9 +7,8 @@ class GameEngine{
         [],
         []
     ];
-    Background = new Array(2);
+    Background = undefined;
     Screen = document.getElementById("screen");
-
 
     constructor(diff_level){
         let rates = [0.999,0.997,0.995];
@@ -26,8 +25,7 @@ class GameEngine{
         this.Player.setX(this.Player.getX());
         this.Player.setY("85%");
        
-        this.Background[0].setY(0);
-        this.Background[1].setY('-100%');
+        this.Background.resetPosition();
     }
 
     spawnProjectile(obj,type){
@@ -75,14 +73,8 @@ class GameEngine{
         this.addToScreen(this.Player);
     }
 
-    //TODO: Talvez o objeto Background deva compreender os 2 paineis e comportamento deles
     initializeBackground(diff_level){
-
-        this.Background[0] = new Background('panel_1',diff_level * 2);
-        this.Background[0].appendTo(this.Screen,0,0);
-
-        this.Background[1] = new Background('panel_2',diff_level * 2);
-        this.Background[1].appendTo(this.Screen,0,"-100%");    
+        this.Background = new Background(diff_level*2,this.Screen);    
     }
 
     shoot(){
@@ -173,18 +165,6 @@ class GameEngine{
         }   
     }
 
-    processBackgroundAnimation(){
-        //TODO: talvez o objeto Background deva conter este comportamento
-        if(this.Background[0].moveDown()){
-            this.Background[1].moveDown();
-        }
-        else{
-            this.Background[0].resetPosition();
-            this.Background[1].resetPosition();
-        }
-        
-    }
-
     update(){
         let status = true;
 
@@ -197,7 +177,7 @@ class GameEngine{
 
         this.processEnemyBehavior(this.Enemies,this.Player);
 
-        this.processBackgroundAnimation();
+        this.Background.animate();
 
         this.processInput(this.Player);    
 
