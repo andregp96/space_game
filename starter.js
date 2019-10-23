@@ -8,7 +8,7 @@ function redraw(){
 
 function iniciaJogo(dificuldade) {
     game = new Game();
-    document.getElementById('menu').style.display = "none";
+    document.getElementById('main_screen').style.display = "none";
     document.getElementById('screen').style.display = "block";
     game.initializeGame(dificuldade);
 

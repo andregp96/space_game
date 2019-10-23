@@ -17,14 +17,25 @@
         <script src='classes/Game.js'></script>
     </head>
     <body>    
-        <div id='menu' class='menu'>
-            <h2 style='margin:0px'>Escolha uma dificuldade para iniciar o jogo:</h2>
-            <input type='button' onclick="iniciaJogo(0)" value="Baixa">
-            <input type='button' onclick="iniciaJogo(1)" value="Media">
-            <input type='button' onclick="iniciaJogo(2)" value="Alta">
-        </div>
+        <div class='dialogue' id='main_screen'>
+            <div id='menu' class='menu'>
+                <h2 style='margin:2px;text-align: center'>Escolha uma dificuldade para iniciar o jogo:</h2>
+                <div>
+                    <input class='menu_button' type='button' onclick="iniciaJogo(0)" value="Baixa">
+                </div>
 
-        <div class='background' id='screen' style='display: none'>
+                <div>
+                    <input class='menu_button' type='button' onclick="iniciaJogo(1)" value="Média">
+                </div>
+
+                <div>
+                    <input class='menu_button' type='button' onclick="iniciaJogo(2)" value="Alta">
+                </div>
+            </div>
+        </div>
+       
+
+        <div class='game_screen' id='screen' style='display: none'>
             
         </div>
     </body>
