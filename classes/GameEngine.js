@@ -7,10 +7,7 @@ class GameEngine{
         [],
         []
     ];
-    Background = [
-        new GameObject("panel1"),
-        new GameObject("panel2")
-    ]
+    Background = new Array(2);
     Screen = document.getElementById("screen");
 
 
@@ -18,7 +15,7 @@ class GameEngine{
         let rates = [0.999,0.997,0.995];
         this.initializeEnemies((diff_level+1) * 23,rates[diff_level]);
         this.initializePlayer();
-        this.initializeBackground();
+        this.initializeBackground(diff_level+1);
     }
 
     addToScreen(obj){
@@ -26,8 +23,11 @@ class GameEngine{
     };
 
     resizeScreen(){
-       this.Player.setX(this.Player.getX());
-       this.Player.setY("90%");
+        this.Player.setX(this.Player.getX());
+        this.Player.setY("85%");
+       
+        this.Background[0].setY(0);
+        this.Background[1].setY('-100%');
     }
 
     spawnProjectile(obj,type){
@@ -70,26 +70,19 @@ class GameEngine{
 
     initializePlayer(){
         this.Player.setX("45%");
-        this.Player.setY("90%");
+        this.Player.setY("85%");
 
         this.addToScreen(this.Player);
     }
 
-    //TODO: migrar para objeto próprio
-    initializeBackground(){
-        this.Background[0].setX(0);
-        this.Background[0].setY(0);
-        this.Background[0].setImg("img/bg.png");
-        this.Background[0].ScreenElement.classList.add('background');
-        this.Background[0].appendTo(this.Screen);
+    //TODO: Talvez o objeto Background deva compreender os 2 paineis e comportamento deles
+    initializeBackground(diff_level){
 
-        this.Background[1].setX(0);
-        this.Background[1].setY('-100%');
-        this.Background[1].setImg("img/bg.png");
-        this.Background[1].ScreenElement.classList.add('background');
-        this.Background[1].appendTo(this.Screen);
-        
-        
+        this.Background[0] = new Background('panel_1',diff_level * 2);
+        this.Background[0].appendTo(this.Screen,0,0);
+
+        this.Background[1] = new Background('panel_2',diff_level * 2);
+        this.Background[1].appendTo(this.Screen,0,"-100%");    
     }
 
     shoot(){
@@ -181,14 +174,15 @@ class GameEngine{
     }
 
     processBackgroundAnimation(){
-        //TODO: migrar para objeto próprio
-        this.Background[0].setY(this.Background[0].getY() + 3);
-        this.Background[1].setY(this.Background[1].getY() + 3);
-
-        if(this.Background[0].getY() > window.innerHeight){
-            this.Background[0].setY(0);
-            this.Background[1].setY('-100%');
+        //TODO: talvez o objeto Background deva conter este comportamento
+        if(this.Background[0].moveDown()){
+            this.Background[1].moveDown();
         }
+        else{
+            this.Background[0].resetPosition();
+            this.Background[1].resetPosition();
+        }
+        
     }
 
     update(){
