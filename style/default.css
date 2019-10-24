@@ -60,5 +60,10 @@ body{
 
 .menu_button:hover{
     cursor: pointer;
-    box-shadow:  0 0 5px white;
+    box-shadow:  0 0 10px white;
 }
+
+.menu_button:focus{
+    box-shadow:  0 0 10px white;
+}
+
