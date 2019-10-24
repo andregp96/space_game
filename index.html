@@ -43,19 +43,15 @@
                 </div>
 
                 <div>
-                    <input class='menu_button' type='button' onClick='game.resetGame()' value="Reiniciar">
-                </div>
-
-                <div>
                     <input class='menu_button' type='button' onClick='game.endGame("main_screen")' value="Voltar para o Menu">
                 </div>
             </div>
             <div id='in_game_win' class='menu in_game' style='display: none'>
                 <h2 style='margin:2px;text-align: center'>Você venceu!</h2>
-                <h3>
+                <div>
                     A tirania do império felino foi finalmente derrotada. Nunca mais teremos que limpar
                     uma caixa de areia!
-                </h3>
+                </div>
                 <div>
                     <input class='menu_button' type='button' onClick='game.endGame("main_screen")' value="Voltar ao Menu">
                 </div>
@@ -63,9 +59,9 @@
             </div>
             <div id='in_game_lose' class='menu in_game' style='display: none'>
                 <h2 style='margin:2px;text-align: center'>Você falhou!</h2>
-                <h3>
+                <div>
                     O império felino reina dominante sobre a galáxia, tendo todos os humanos como seus servos.
-                </h3>
+                </div>
                 <div>
                     <input class='menu_button' type='button' onClick='game.endGame("main_screen")' value="Voltar ao Menu">
                 </div>

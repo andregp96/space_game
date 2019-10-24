@@ -23,6 +23,7 @@ class Game{
     
     showScreen(screen){
         document.getElementById(screen).style.display = "block";
+        document.getElementById(screen).focus();
     }
 
     hideScreen(screen){
