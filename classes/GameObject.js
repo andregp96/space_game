@@ -147,7 +147,10 @@ class GameObject{
     // }
 
     destroy(){
-        this.ScreenElement.remove();
-        this.ScreenElement = undefined;
+        if(this.ScreenElement != undefined){
+            this.ScreenElement.remove();
+            this.ScreenElement = undefined;
+        }
+        
     }
 }

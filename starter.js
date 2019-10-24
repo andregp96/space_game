@@ -1,42 +1,19 @@
 var game = undefined;
 
-function redraw(){
-    if(game != undefined){
-        game.resizeGame();
-    }
-}
-
 function iniciaJogo(dificuldade) {
-    game = new Game();
+    game = new Game("in_game_menu","in_game_lose","in_game_win");
+
+    window.addEventListener("resize",function(){game.redraw()});
+
     document.getElementById('main_screen').style.display = "none";
     document.getElementById('screen').style.display = "block";
+    
     game.initializeGame(dificuldade);
 
-    document.addEventListener('keydown',function(key){game.setKey(key.keyCode,true)});
-    document.addEventListener('keyup',function(key){game.setKey(key.keyCode,false)});
-   
-    document.addEventListener("keypress",function(key){
-    if(game == undefined){
-        return false;
-    }
-    switch(key.keyCode){
-        case 32:
-            game.shoot();
-        break;
+    document.addEventListener('keypress',function(key){game.screenInput(key.keyCode)});
 
-        case 112:
-            if(game.State){
-                game.stopGame();
-            }
-            else{
-                game.startGame();
-            }
-        break;
-
-        
-    }
-
-});
-window.addEventListener("resize",function(){redraw()});
+    document.addEventListener('keydown',function(key){game.gameInput(key.keyCode,true)});
+    document.addEventListener('keyup',function(key){game.gameInput(key.keyCode,false)});
+    
 }
 

@@ -41,4 +41,8 @@ class Background{
         this.Panels[1].setY(-this.Panels[1].getHeight());
     }
 
+    destroy(){
+        this.Panels[0].destroy();
+        this.Panels[1].destroy();
+    }
 }

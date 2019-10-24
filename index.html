@@ -17,7 +17,7 @@
         <script src='classes/Game.js'></script>
     </head>
     <body>    
-        <div class='dialogue' id='main_screen'>
+        <div class='main_screen' id='main_screen'>
             <div id='menu' class='menu'>
                 <h2 style='margin:2px;text-align: center'>Escolha uma dificuldade para iniciar o jogo:</h2>
                 <div>
@@ -32,11 +32,45 @@
                     <input class='menu_button' type='button' onclick="iniciaJogo(2)" value="Alta">
                 </div>
             </div>
-        </div>
-       
+
+        </div>    
 
         <div class='game_screen' id='screen' style='display: none'>
-            
+            <div id='in_game_menu' class='menu in_game' style='display: none'>
+                <h2 style='margin:2px;text-align: center'>Jogo Pausado</h2>
+                <div>
+                    <input class='menu_button' type='button' onClick='game.startGame()' value="Resume">
+                </div>
+
+                <div>
+                    <input class='menu_button' type='button' onClick='game.resetGame()' value="Reiniciar">
+                </div>
+
+                <div>
+                    <input class='menu_button' type='button' onClick='game.endGame("main_screen")' value="Voltar para o Menu">
+                </div>
+            </div>
+            <div id='in_game_win' class='menu in_game' style='display: none'>
+                <h2 style='margin:2px;text-align: center'>Você venceu!</h2>
+                <h3>
+                    A tirania do império felino foi finalmente derrotada. Nunca mais teremos que limpar
+                    uma caixa de areia!
+                </h3>
+                <div>
+                    <input class='menu_button' type='button' onClick='game.endGame("main_screen")' value="Voltar ao Menu">
+                </div>
+
+            </div>
+            <div id='in_game_lose' class='menu in_game' style='display: none'>
+                <h2 style='margin:2px;text-align: center'>Você falhou!</h2>
+                <h3>
+                    O império felino reina dominante sobre a galáxia, tendo todos os humanos como seus servos.
+                </h3>
+                <div>
+                    <input class='menu_button' type='button' onClick='game.endGame("main_screen")' value="Voltar ao Menu">
+                </div>
+
+            </div>
         </div>
     </body>
 

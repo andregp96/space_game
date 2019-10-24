@@ -17,6 +17,26 @@ class GameEngine{
         this.initializeBackground(diff_level+1);
     }
 
+    destroy(){
+        for(let i in this.Enemies){
+            this.Enemies[i].destroy();
+        }
+        for(let i in this.Projectiles[0]){
+            this.Projectiles[0][i].destroy();
+        }
+        for(let i in this.Projectiles[1]){
+            this.Projectiles[1][i].destroy();
+        }
+
+        this.Player.destroy();
+        this.Background.destroy();
+        this.Screen.style.display = "none";
+    }
+
+    setKey(code,value){
+        this.Keys[code] = value;
+    }
+
     addToScreen(obj){
         obj.appendTo(this.Screen);
     };
@@ -166,11 +186,11 @@ class GameEngine{
     }
 
     update(){
-        let status = true;
+        let status = 0;
 
         this.processCollision(this.Enemies,this.Projectiles[0]);
-        if(this.processCollision([this.Player],this.Projectiles[1])){status = false;} 
-        if(this.processCollision([this.Player],this.Enemies)){status = false;}
+        if(this.processCollision([this.Player],this.Projectiles[1])){status = 1;} 
+        if(this.processCollision([this.Player],this.Enemies)){status = 1;}
 
         this.processProjectiles(this.Projectiles[0],"top");
         this.processProjectiles(this.Projectiles[1],"down");
@@ -178,6 +198,7 @@ class GameEngine{
         this.processEnemyBehavior(this.Enemies,this.Player);
 
         this.Background.animate();
+        if(this.Enemies.length == 0){status = 2;}
 
         this.processInput(this.Player);    
 
