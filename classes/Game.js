@@ -47,6 +47,7 @@ class Game{
                 this.showScreen(this.InGameScreens.Win);
             break;
         }
+        this.MainLoop = requestAnimationFrame(this.gameLoop.bind(this));
     }
 
     initializeGame(level){
@@ -70,12 +71,13 @@ class Game{
     }
 
     stopGame(){
-        clearInterval(this.MainLoop);
+        cancelAnimationFrame(this.MainLoop);
         this.State = false;
     }
 
     startGame(){
-        this.MainLoop = setInterval(() => {this.gameLoop()}, 20);
+        this.MainLoop = requestAnimationFrame(this.gameLoop.bind(this));
+        // this.MainLoop = setInterval(() => {this.gameLoop()}, 20);
         this.State = true;
     }
 
