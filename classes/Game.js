@@ -46,8 +46,12 @@ class Game{
                 clearInterval(this.MainLoop);
                 this.showScreen(this.InGameScreens.Win);
             break;
+        
+            default:
+                this.MainLoop = requestAnimationFrame(this.gameLoop.bind(this));
+            break;
         }
-        this.MainLoop = requestAnimationFrame(this.gameLoop.bind(this));
+        
     }
 
     initializeGame(level){
@@ -70,15 +74,20 @@ class Game{
         this.initializeGame(this.DifficultyLevel);
     }
 
-    stopGame(){
+    stopGame(screen){
         cancelAnimationFrame(this.MainLoop);
         this.State = false;
+        if(screen != undefined){
+            this.showScreen(this.InGameScreens.Menu);
+        }
     }
 
-    startGame(){
+    startGame(screen){
         this.MainLoop = requestAnimationFrame(this.gameLoop.bind(this));
-        // this.MainLoop = setInterval(() => {this.gameLoop()}, 20);
         this.State = true;
+        if(screen != undefined){
+            this.hideScreen(this.InGameScreens.Menu);
+        }
     }
 
     shoot(){
@@ -97,12 +106,11 @@ class Game{
         
             case 112:
                 if(this.State){
-                    this.stopGame();
-                    this.showScreen(this.InGameScreens.Menu);
+                    this.stopGame(true);
+                    
                 }
                 else{
-                    this.startGame();
-                    this.hideScreen(this.InGameScreens.Menu);
+                    this.startGame(true);  
                 }
             break;
         }
