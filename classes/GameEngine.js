@@ -9,6 +9,7 @@ class GameEngine{
     ];
     Background = undefined;
     Screen = document.getElementById("screen");
+    FireReady = true;
 
     constructor(diff_level){
         let rates = [0.999,0.997,0.995];
@@ -98,7 +99,11 @@ class GameEngine{
     }
 
     shoot(){
-        this.spawnProjectile(this.Player,0);
+        if(this.FireReady){
+            this.FireReady = false;
+            this.spawnProjectile(this.Player,0);
+        }
+        
     }
 
     processCollision(targets, projectiles){
@@ -145,6 +150,7 @@ class GameEngine{
     }
 
     processProjectiles(projectiles,direction){
+
         if(direction == "top"){
             for(let i in projectiles){
                 let proj = projectiles[i];
@@ -179,7 +185,7 @@ class GameEngine{
     processEnemyBehavior(enemies,player){
         for(let index in enemies){
             let en = enemies[index];
-            if(en.update(player)){
+            if(en.update(player) && this.Projectiles[1].length < 16){
                 this.spawnProjectile(en,1);
             }
         }   
@@ -187,6 +193,7 @@ class GameEngine{
 
     update(){
         let status = 0;
+        this.FireReady = true;
 
         this.processCollision(this.Enemies,this.Projectiles[0]);
         if(this.processCollision([this.Player],this.Projectiles[1])){status = 1;} 
