@@ -31,4 +31,9 @@ class Enemy extends GameObject{
         this.move();
         return this.fire(player);
     }
+
+    die(){
+        let sound = new Audio("sound/cat.wav");
+        sound.play();
+    }
 }

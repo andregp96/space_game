@@ -2,7 +2,7 @@ class GameEngine{
 
     Keys = {};
     Enemies = [];
-    Player = new Ship("player");
+    Player = undefined;
     Projectiles = [
         [],
         []
@@ -56,6 +56,9 @@ class GameEngine{
 
         this.Projectiles[type].push(proj);
         this.addToScreen(proj);
+
+        let sound = new Audio("sound/laser2.wav");
+        sound.play();
     }
 
     spawnEnemy(id,initial_x,initial_y,firerate){
@@ -88,6 +91,8 @@ class GameEngine{
     }
 
     initializePlayer(){
+        this.Player = new Ship("player");
+
         this.Player.setX("45%");
         this.Player.setY("85%");
 
@@ -116,6 +121,7 @@ class GameEngine{
                 let tg = targets[j];
                 if(tg.checkCollision(proj) == true){
                     targets.splice(j,1);
+                    tg.die();
                     tg.destroy();
                     tg = undefined;
 
@@ -192,12 +198,11 @@ class GameEngine{
     }
 
     update(){
-        let status = 0;
         this.FireReady = true;
 
         this.processCollision(this.Enemies,this.Projectiles[0]);
-        if(this.processCollision([this.Player],this.Projectiles[1])){status = 1;} 
-        if(this.processCollision([this.Player],this.Enemies)){status = 1;}
+        if(this.processCollision([this.Player],this.Projectiles[1])){ return 1;} 
+        if(this.processCollision([this.Player],this.Enemies)){return 1;}
 
         this.processProjectiles(this.Projectiles[0],"top");
         this.processProjectiles(this.Projectiles[1],"down");
@@ -205,10 +210,10 @@ class GameEngine{
         this.processEnemyBehavior(this.Enemies,this.Player);
 
         this.Background.animate();
-        if(this.Enemies.length == 0){status = 2;}
+        if(this.Enemies.length == 0){return 2;}
 
         this.processInput(this.Player);    
 
-        return status;
+        return 0;
     }
 }
