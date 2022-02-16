@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "ES6",
+        "skipLibCheck": true,
+        "outDir": "/dist/js",
+        "strictNullChecks": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
