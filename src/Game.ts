@@ -1,17 +1,17 @@
 class Game{
 
-    State = false;
-    DifficultyLevel = 0;
-    MainLoop = undefined;
-    Engine = undefined;
+    State: boolean = false;
+    DifficultyLevel: number = 0;
+    MainLoop:number = undefined;
+    Engine:GameEngine = undefined;
 
-    InGameScreens = {
+    InGameScreens:{Win:string, Lose:string, Menu:string} = {
         Win : undefined,
         Lose : undefined,
         Menu : undefined
     }
 
-    constructor(menu_screen,lose_screen,win_screen){
+    constructor(menu_screen:string ,lose_screen:string ,win_screen:string){
         this.InGameScreens.Menu = menu_screen;
         this.InGameScreens.Lose = lose_screen;
         this.InGameScreens.Win = win_screen;    
@@ -21,12 +21,12 @@ class Game{
         this.hideScreen(this.InGameScreens.Win);
     }
     
-    showScreen(screen){
+    showScreen(screen: string){
         document.getElementById(screen).style.display = "block";
         document.getElementById(screen).focus();
     }
 
-    hideScreen(screen){
+    hideScreen(screen: string){
         document.getElementById(screen).style.display = "none";
     }
 
@@ -49,13 +49,13 @@ class Game{
         }
     }
 
-    initializeGame(level){
+    initializeGame(level: number){
         this.DifficultyLevel = level;
         this.Engine = new GameEngine(this.DifficultyLevel);
         this.startGame();
     }
 
-    endGame(main_screen){
+    endGame(main_screen:string){
         this.Engine.destroy();
         this.Engine = undefined;
         
@@ -83,11 +83,11 @@ class Game{
         this.Engine.shoot();
     }
 
-    gameInput(key,state){
+    gameInput(key:number, state: boolean){
         this.Engine.setKey(key,state);
     }
 
-    screenInput(key){
+    screenInput(key:number){
         switch(key){
             case 32:
                 this.Engine.shoot();

@@ -1,6 +1,6 @@
 class Projectile extends GameObject{
 
-    constructor(id,type){
+    constructor(id: string, type: number){
         super(id);
         this.ScreenElement.classList.add("projectile");
         this.Speed = 10;

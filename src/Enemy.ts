@@ -1,8 +1,8 @@
 class Enemy extends GameObject{
 
-    Firerate =  undefined;
+    Firerate: number =  undefined;
 
-    constructor(id,firerate){
+    constructor(id: string, firerate: number){
         super(id);
         this.ScreenElement.classList.add("enemy");
         this.Speed = 1;
@@ -18,7 +18,7 @@ class Enemy extends GameObject{
         }
     }
 
-    fire(player){
+    fire(player: Ship){
         if(Math.random() >= this.Firerate || (this.checkAllignement(player) && Math.random() >= this.Firerate)){
             return true;
         }
@@ -27,7 +27,7 @@ class Enemy extends GameObject{
         }
     }
 
-    update(player){
+    update(player: Ship){
         this.move();
         return this.fire(player);
     }

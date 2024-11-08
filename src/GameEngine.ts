@@ -1,17 +1,17 @@
 class GameEngine{
 
-    Keys = {};
-    Enemies = [];
+    Keys:{[key: number]:boolean} = {};
+    Enemies: Enemy[] = [];
     Player = new Ship("player");
-    Projectiles = [
+    Projectiles: Projectile[][]= [
         [],
         []
     ];
-    Background = undefined;
+    Background: Background = undefined;
     Screen = document.getElementById("screen");
     FireReady = true;
 
-    constructor(diff_level){
+    constructor(diff_level: number){
         let rates = [0.999,0.997,0.995];
         this.initializeEnemies((diff_level+1) * 23,rates[diff_level]);
         this.initializePlayer();
@@ -34,11 +34,11 @@ class GameEngine{
         this.Screen.style.display = "none";
     }
 
-    setKey(code,value){
+    setKey(code: number, value: boolean){
         this.Keys[code] = value;
     }
 
-    addToScreen(obj){
+    addToScreen(obj:GameObject){
         obj.appendTo(this.Screen);
     };
 
@@ -49,8 +49,8 @@ class GameEngine{
         this.Background.resetPosition();
     }
 
-    spawnProjectile(obj,type){
-        let proj = new Projectile("projectile",type);
+    spawnProjectile(obj:GameObject, type: number){
+        let proj = new Projectile("projectile", type);
         proj.setX(-2 + obj.getX() + obj.getWidth()/2);
         proj.setY(obj.getY() + 10); 
 
@@ -58,7 +58,7 @@ class GameEngine{
         this.addToScreen(proj);
     }
 
-    spawnEnemy(id,initial_x,initial_y,firerate){
+    spawnEnemy(id:string, initial_x:string, initial_y:string, firerate:number){
         let en = new Enemy(id,firerate);
         en.setX(initial_x);
         en.setY(initial_y);
@@ -67,13 +67,13 @@ class GameEngine{
         this.addToScreen(en);
     }
 
-    initializeEnemies(amount, firerate){
+    initializeEnemies(amount:number, firerate:number){
         let x = 4;
         let y = 2;
         let speed_factor = 1;
         
         for(let i = 0;i < amount;i++){
-            this.spawnEnemy('enemy_'+i,x+'%',y+'%',firerate);
+            this.spawnEnemy('enemy_'+i, x+'%', y+'%', firerate);
             this.Enemies[i].setSpeed(this.Enemies[i].getSpeed() * speed_factor);
             
             if(x > 90){
@@ -94,7 +94,7 @@ class GameEngine{
         this.addToScreen(this.Player);
     }
 
-    initializeBackground(diff_level){
+    initializeBackground(diff_level: number){
         this.Background = new Background(diff_level*2,this.Screen);    
     }
 
@@ -106,7 +106,7 @@ class GameEngine{
         
     }
 
-    processCollision(targets, projectiles){
+    processCollision(targets: GameObject[], projectiles: GameObject[]){
         let result = false;
 
         for(let i in projectiles){
@@ -115,11 +115,11 @@ class GameEngine{
             for(let j in targets){
                 let tg = targets[j];
                 if(tg.checkCollision(proj) == true){
-                    targets.splice(j,1);
+                    targets.splice(parseInt(j),1);
                     tg.destroy();
                     tg = undefined;
 
-                    projectiles.splice(i,1);
+                    projectiles.splice(parseInt(i),1);
                     proj.destroy();
                     proj = undefined;
                     
@@ -132,7 +132,7 @@ class GameEngine{
         return result;
     }
 
-    processInput(player){
+    processInput(player:Ship){
         for(let key in this.Keys){
             if(this.Keys[key]){
                 switch(key){
@@ -149,14 +149,14 @@ class GameEngine{
         }  
     }
 
-    processProjectiles(projectiles,direction){
+    processProjectiles(projectiles: Projectile[], direction: "top" | "down"){
 
         if(direction == "top"){
             for(let i in projectiles){
                 let proj = projectiles[i];
                 
                 if(proj.getState() == "Dead"){
-                    projectiles.splice(i,1);
+                    projectiles.splice(parseInt(i),1);
                     proj.destroy();
                     proj = undefined;
                 }
@@ -170,7 +170,7 @@ class GameEngine{
                 let proj = projectiles[i];
                 
                 if(proj.getState() == "Dead"){
-                    projectiles.splice(i,1);
+                    projectiles.splice(parseInt(i),1);
                     proj.destroy();
                     proj = undefined;
                 }
@@ -182,7 +182,7 @@ class GameEngine{
         
     }
 
-    processEnemyBehavior(enemies,player){
+    processEnemyBehavior(enemies:Enemy[],player: Ship){
         for(let index in enemies){
             let en = enemies[index];
             if(en.update(player) && this.Projectiles[1].length < 16){

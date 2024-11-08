@@ -8,7 +8,7 @@
         "strictNullChecks": false
     },
 
-    "include": ["src/*"],
+    "include": ["src/*","starter.ts"],
     
     
     "exclude": [

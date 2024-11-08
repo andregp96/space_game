@@ -1,6 +1,6 @@
 class Ship extends GameObject{
 
-    constructor(id){
+    constructor(id: string){
         super(id);
         this.ScreenElement.classList.add("ship");
         this.setImg("img/ship2.svg");

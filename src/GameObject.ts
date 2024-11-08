@@ -1,14 +1,14 @@
 class GameObject{
 
-    ScreenElement = document.createElement("div");
-    State = "Alive";
-    Appended = false;
-    Img = document.createElement("img");
-    Speed = undefined;
-    x = 0;
-    y = 0;
+    ScreenElement: HTMLElement = document.createElement("div");
+    State: string = "Alive";
+    Appended: boolean = false;
+    Img:HTMLImageElement = document.createElement("img");
+    Speed: number = undefined;
+    x:number = 0;
+    y:number = 0;
 
-    constructor(id){
+    constructor(id: string){
         this.ScreenElement.classList.add("game_object");
         this.ScreenElement.id = id;
     }
@@ -17,7 +17,7 @@ class GameObject{
         return this.State;
     }
 
-    appendTo(parent){
+    appendTo(parent:HTMLElement){
         parent.append(this.ScreenElement);
         this.Appended = true;
 
@@ -25,38 +25,38 @@ class GameObject{
         this.setX(this.getAbsoluteX());
     }
 
-    setImg(src){
+    setImg(src:string){
         this.Img.src = src;
         this.ScreenElement.append(this.Img);
     }
 
-    setX(value){
-    
-        if(this.Appended == true){
+    setX(value:number | string){
+        if(this.Appended == true && typeof value == "number" ){
             if(this.getWidth() + value > window.innerWidth || value < 0){
                 return false;
             }
         }     
         
-        value= value.toString();
-        if(value.search("%") == value.length - 1){
-            this.setPctValue(value,"left");
+        let css_value = value.toString();
+        if(css_value.search("%") == css_value.length - 1){
+            this.setPctValue(css_value,"left");
         }
         else{ 
-            this.setPXValue(value,"left");
+            this.setPXValue(css_value,"left");
         }
 
         this.x = this.getAbsoluteX();
         return true;
     }
 
-    setY(value){
-        value= value.toString();
-        if(value.search("%") == value.length - 1){
-            this.setPctValue(value,"top");
+    setY(value: number | string){
+        let css_value = value.toString();
+
+        if(css_value.search("%") == css_value.length - 1){
+            this.setPctValue(css_value,"top");
         }
         else{
-            this.setPXValue(value,"top");
+            this.setPXValue(css_value,"top");
         }
         if(this.Appended == true){
             this.y = this.getAbsoluteY();
@@ -65,15 +65,16 @@ class GameObject{
         return true;
     }
 
-    setPXValue(value,property){
+    setPXValue(value: string, property: "top" | "left"){
         this.ScreenElement.style[property] = value+"px";
+
     }
 
-    setPctValue(value,property){
+    setPctValue(value:string, property: "top" | "left"){
         this.ScreenElement.style[property] = value;
     }
 
-    setSpeed(value){
+    setSpeed(value: number){
         this.Speed = value;
     }
 
@@ -109,7 +110,7 @@ class GameObject{
         return this.Speed;
     }
 
-    checkCollision(projectile){
+    checkCollision(projectile: GameObject){
         if(
             (projectile.getY() >= this.y && projectile.getY() <= this.y + this.getHeight()) &&
             (projectile.getX() >= this.x && projectile.getX() <= this.x + this.getWidth())
@@ -121,7 +122,7 @@ class GameObject{
         }
     }
 
-    checkAllignement(obj){
+    checkAllignement(obj: GameObject){
         if(obj.getX() >= this.x && obj.getX() <= this.x + this.getWidth()){
             return true;
         }
