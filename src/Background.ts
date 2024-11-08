@@ -1,10 +1,8 @@
 class Background{
     
-    Panels = [];
-    InitialX = undefined;
-    InitialY = undefined;    
+    Panels: GameObject[] = [];  
 
-    constructor(speed,screen){
+    constructor(speed:number, screen: HTMLElement){
     
         this.Panels[0] = new GameObject("panel_1");
         this.Panels[0].ScreenElement.classList.add("background");
